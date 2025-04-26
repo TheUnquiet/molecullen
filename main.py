@@ -35,12 +35,21 @@ y_pred = model.predict(TDDFTTDA_array) # Hier maakt hij dan de voorspelling
 
 diff = model.score(TDDFTTDA_array, TDDFT_array) # Dit is onze R² (determinatiecoëfficiënt)
 # Hier gaan we het plot tekenen
+plt.figure()
 plt.scatter(TDDFTTDA_array, TDDFT_array, label="Molecullen") # Ik toon de molecullen ( ik ben niet zeker of het moet )
 plt.plot(TDDFTTDA_array, y_pred, color='red', label=f'R^2 = {diff:.3f}') # Ik toon de waarde van R²
 plt.xlabel('TDDFT/TDA excitation energies (eV)') # Wat betekenen de waarden van de X as?
 plt.ylabel('TDDFT excitation energies (eV)') # Wat betekenen de waarden van de Y as?
 plt.legend() # Toon zo een box met de betekenis van de kleurtjes 😎
 plt.grid(True) # Een grid, de vakjes
-plt.show() # Toon de plot 😎
+
 
 # PART 3 FINISH
+
+# PART 4 TEST
+
+m = Molecule(out_files[0], dat_files[0])
+
+m.draw_plot_of_spectrum()
+
+# PART 4 FINISH 

@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 # PART 1 START
 class Molecule:
     def __init__(self, out_path: str, dat_path: str):
@@ -8,7 +11,7 @@ class Molecule:
 
     # PART 2 START
     
-    def returnPossibleExcitedState(self, key_word: str):
+    def return_possible_excited_states(self, key_word: str):
         start_marker = ""
         end_marker = ""
 
@@ -61,6 +64,46 @@ class Molecule:
                     continue
         # We geven de lijst terug
         return energies
-
         
     # PART 2 FINISH
+
+    # PART 4 START
+    # TODO add comments
+    def draw_plot_of_spectrum(self):
+        wavelengths = []
+        intensity = []
+
+        initial_value = None
+        final_value = None
+        increment = None
+
+        with open(self.dat_path) as file:
+            lines = file.readlines()
+        
+        for line in lines:
+            if "INITIAL_VALUE =" in line:
+                initial_value = float(line.split('=')[1].strip().strip(' (nm)'))
+            elif "FINAL_VALUE =" in line:
+                final_value = float(line.split('=')[1].strip().strip(' (nm)'))
+            elif "INCREMENT =" in line:
+                increment = float(line.split('=')[1].strip().strip(' (nm)'))
+        if initial_value is not None and final_value is not None and increment is not None:
+            wavelengths = np.arange(initial_value, final_value + increment, increment)
+
+        for line in lines:
+            if "UV/VIS SPECTRUM" in line or "INITIAL_VALUE" in line or "FINAL_VALUE" in line or "INCREMENT" in line:
+                continue
+            for value in line.split():
+                try:
+                    intensity.append(float(value))
+                except ValueError:
+                    continue
+        
+        plt.figure()
+        plt.plot(wavelengths, intensity)
+        plt.xlabel('Wavelength (nm)')
+        plt.ylabel('Intensity')
+        plt.grid(True)
+        plt.show()
+
+    # PART 4 FINISH
