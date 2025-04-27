@@ -81,6 +81,12 @@ Petunidin_H = Molecule("Petunidin_H", returnOutFileForMolecule("Petunidin_H"), r
 
 Petunidin_H.draw_plot_of_spectrum()
 
+# PART 6 TEST
+
+print(Cyanidin_H.return_integral_of_spectrum())
+
+# PART 6 TEST FINISH
+
 plt.show() # We tonen alle grafieken tegelijk
 
 # PART 5 FINISH 

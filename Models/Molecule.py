@@ -68,8 +68,7 @@ class Molecule:
         
     # PART 2 FINISH
 
-    # PART 4 START
-    def draw_plot_of_spectrum(self):
+    def get_wavelengths_and_intensity(self):
         wavelengths = [] # X as waarden ( golflengte )
         intensity = [] # Y as waarden ( intensiteit )
 
@@ -101,7 +100,7 @@ class Molecule:
             # Gaan we een numpy array maken van alle waarden tussen initial_value (350 nm) tot en met final_value (800 nm)
             # Met als tussen stap increment (.1)
             wavelengths = np.arange(initial_value, final_value + increment, increment)
-        # We gaan opnieuw doo alle lijnen 
+        
         for line in lines:
             # Deze lijnen hebben we niet meer nodig
             if "UV/VIS SPECTRUM" in line or "INITIAL_VALUE" in line or "FINAL_VALUE" in line or "INCREMENT" in line:
@@ -118,12 +117,32 @@ class Molecule:
                     intensity.append(float(value)) # We maken eerst een kommagetal van onze waarde, hij is anders van type string
                 except ValueError: # Als we op een of andere manier toch geen getal lezen gooien we een fout
                     continue # We doen verder dan gwn door met het lezen van de waarden in de split() methode
+
+        return wavelengths, intensity
+
+    # PART 4 START
+    def draw_plot_of_spectrum(self):
+        values = self.get_wavelengths_and_intensity()
+
         # We gaan nu eindelijk een plot tekenen
         plt.figure() # Hierdoor kunnen wij meerdere plots op scherm laten zien
-        plt.plot(wavelengths, intensity) # We gaan hier de grafiek tekenen, x as is de golflengte en y as de intensiteit (zie word doc)
+        plt.plot(values[0], values[1]) # We gaan hier de grafiek tekenen, x as is de golflengte en y as de intensiteit (zie word doc)
         plt.title(f"{self.name} spectrum") # We zetten er een mooi titeltje bij met de naam van de moleculle, nu weten wij over welke het gaat! 😉
         plt.xlabel('Wavelength (nm)') # Wat is de betekenis van de x as?
         plt.ylabel('Intensity') # Wat is de betekenis van de y as?
         plt.grid(True) # Mooie vakje achter de grafiek 😎
         
     # PART 4 FINISH
+
+    # PART 6 START
+
+    def return_integral_of_spectrum(self):
+        values = self.get_wavelengths_and_intensity()
+        x = values[0]
+        y = values[1]
+
+        integral = 0
+        for i in range(len(x) - 1):
+            integral += (y[i] + y[i+1]) / 2 * (x[i+1] - x[i])
+
+        return integral
