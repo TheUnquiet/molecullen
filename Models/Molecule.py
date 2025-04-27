@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # PART 1 START
 class Molecule:
     def __init__(self, name: str, out_path: str, dat_path: str):
-        self.name = name
+        self.name = name # We geven hier de naam
         self.out_path = out_path
         self.dat_path = dat_path
    
@@ -121,7 +121,7 @@ class Molecule:
         # We gaan nu eindelijk een plot tekenen
         plt.figure() # Hierdoor kunnen wij meerdere plots op scherm laten zien
         plt.plot(wavelengths, intensity) # We gaan hier de grafiek tekenen, x as is de golflengte en y as de intensiteit (zie word doc)
-        plt.title(f"{self.name} spectrum")
+        plt.title(f"{self.name} spectrum") # We zetten er een mooi titeltje bij met de naam van de moleculle, nu weten wij over welke het gaat! 😉
         plt.xlabel('Wavelength (nm)') # Wat is de betekenis van de x as?
         plt.ylabel('Intensity') # Wat is de betekenis van de y as?
         plt.grid(True) # Mooie vakje achter de grafiek 😎

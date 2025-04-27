@@ -43,12 +43,13 @@ plt.legend() # Toon zo een box met de betekenis van de kleurtjes 😎
 plt.grid(True) # Een grid, de vakjes
 
 # PART 3 FINISH
-
+# Deze zijn helper methodes
 def returnOutFileForMolecule(molecule_name: str):
+    # We gaan door alle .out bestanden
     for file in out_files:
-        if molecule_name in file.name:
-            return str(file)
-        
+        if molecule_name in file.name: # Als de naam van de moleculle in de naam van het bestand zit
+            return str(file) # Geven we het pad van het bestand terug
+# Zelfde als hierboven maar voor .dat bestanden
 def returnDatFileForMolecule(molecule_name: str):
     for file in dat_files:
         if molecule_name in file.name:
@@ -56,10 +57,10 @@ def returnDatFileForMolecule(molecule_name: str):
     
 # PART 5 START
 
-Cyanidin_H = Molecule("Cyanidin_H", returnOutFileForMolecule("Cyanidin_H"), returnDatFileForMolecule("Cyanidin_H"))
+Cyanidin_H = Molecule("Cyanidin_H", returnOutFileForMolecule("Cyanidin_H"), returnDatFileForMolecule("Cyanidin_H")) # We maken hier een moleculle object
 
-Cyanidin_H.draw_plot_of_spectrum()
-
+Cyanidin_H.draw_plot_of_spectrum() # We plotten zijn spectrum
+# Dit geld voor alle Molecullen
 Delphinidin_Q1 = Molecule("Delphinidin_Q1", returnOutFileForMolecule("Delphinidin_Q1"), returnDatFileForMolecule("Delphinidin_Q1"))
 
 Delphinidin_Q1.draw_plot_of_spectrum()
@@ -80,6 +81,6 @@ Petunidin_H = Molecule("Petunidin_H", returnOutFileForMolecule("Petunidin_H"), r
 
 Petunidin_H.draw_plot_of_spectrum()
 
-plt.show() # We tonen deze grafiek eerst ( je kan zo nog altijd de grafiek uit de 3de oefening zien )
+plt.show() # We tonen alle grafieken tegelijk
 
 # PART 5 FINISH 
