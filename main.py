@@ -18,8 +18,7 @@ out_files = list(Path(files_dir).rglob("*.out")) # Alle .out bestanden
 for idx, file in enumerate(dat_files):
     # We maken een molucule object voor elke molecule
     # We geven de .out- en .dat bestand mee
-    molucule = Molecule(str(out_files[idx]), str(dat_files[idx]))
-
+    molucule = Molecule("", str(out_files[idx]), str(dat_files[idx]))
     # We gaan hier de TDDFT/TDA waarden toevoegen aan onze grote lijst ( zie lijn 9 )
     TDDFTTDA_list.extend(molucule.return_possible_excited_states("TDDFT/TDA"))
     # We gaan hier de TDDFT waarden toevoegen aan onze grote lijst ( zie lijn 10 )
@@ -43,13 +42,44 @@ plt.ylabel('TDDFT excitation energies (eV)') # Wat betekenen de waarden van de Y
 plt.legend() # Toon zo een box met de betekenis van de kleurtjes 😎
 plt.grid(True) # Een grid, de vakjes
 
-
 # PART 3 FINISH
 
-# PART 4 TEST
+def returnOutFileForMolecule(molecule_name: str):
+    for file in out_files:
+        if molecule_name in file.name:
+            return str(file)
+        
+def returnDatFileForMolecule(molecule_name: str):
+    for file in dat_files:
+        if molecule_name in file.name:
+            return str(file)
+    
+# PART 5 START
 
-m = Molecule(out_files[0], dat_files[0]) # We maken hier een Molecule object met het eerste .dat- en .out bestand
+Cyanidin_H = Molecule("Cyanidin_H", returnOutFileForMolecule("Cyanidin_H"), returnDatFileForMolecule("Cyanidin_H"))
 
-m.draw_plot_of_spectrum() # We roepen de methode op
+Cyanidin_H.draw_plot_of_spectrum()
 
-# PART 4 FINISH 
+Delphinidin_Q1 = Molecule("Delphinidin_Q1", returnOutFileForMolecule("Delphinidin_Q1"), returnDatFileForMolecule("Delphinidin_Q1"))
+
+Delphinidin_Q1.draw_plot_of_spectrum()
+
+Malvidin_Q2 = Molecule("Malvidin_Q2", returnOutFileForMolecule("Malvidin_Q2"), returnDatFileForMolecule("Malvidin_Q2"))
+
+Malvidin_Q2.draw_plot_of_spectrum()
+
+Pelargonidin_Q3 = Molecule("Pelargonidin_Q3", returnOutFileForMolecule("Pelargonidin_Q3"), returnDatFileForMolecule("Pelargonidin_Q3"))
+
+Pelargonidin_Q3.draw_plot_of_spectrum()
+
+Peonidin_Q4 = Molecule("Peonidin_Q4", returnOutFileForMolecule("Peonidin_Q4"), returnDatFileForMolecule("Peonidin_Q4"))
+
+Peonidin_Q4.draw_plot_of_spectrum()
+
+Petunidin_H = Molecule("Petunidin_H", returnOutFileForMolecule("Petunidin_H"), returnDatFileForMolecule("Petunidin_H"))
+
+Petunidin_H.draw_plot_of_spectrum()
+
+plt.show() # We tonen deze grafiek eerst ( je kan zo nog altijd de grafiek uit de 3de oefening zien )
+
+# PART 5 FINISH 
