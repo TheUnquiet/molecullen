@@ -48,8 +48,8 @@ plt.grid(True) # Een grid, de vakjes
 
 # PART 4 TEST
 
-m = Molecule(out_files[0], dat_files[0])
+m = Molecule(out_files[0], dat_files[0]) # We maken hier een Molecule object met het eerste .dat- en .out bestand
 
-m.draw_plot_of_spectrum()
+m.draw_plot_of_spectrum() # We roepen de methode op
 
 # PART 4 FINISH 

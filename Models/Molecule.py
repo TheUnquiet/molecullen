@@ -68,42 +68,61 @@ class Molecule:
     # PART 2 FINISH
 
     # PART 4 START
-    # TODO add comments
     def draw_plot_of_spectrum(self):
-        wavelengths = []
-        intensity = []
+        wavelengths = [] # X as waarden ( golflengte )
+        intensity = [] # Y as waarden ( intensiteit )
 
-        initial_value = None
+        # We gaan hier de waarden die we inlezen opslaan
+        initial_value = None 
         final_value = None
         increment = None
 
+        # We gaan het bestand openen
         with open(self.dat_path) as file:
+            # We houden alle lijnen die in het bestand staan
             lines = file.readlines()
-        
+        # We gaan door alle lijnen
         for line in lines:
+            # Bevat de lijn die we nu lezen de string INITIAL_VALUE = ?
             if "INITIAL_VALUE =" in line:
+                # Slagen we de waarde na de '=' zonder spaties en ' (nm)' op in initial_value
                 initial_value = float(line.split('=')[1].strip().strip(' (nm)'))
+            # Bevat de lijn die we nu lezen de string FINAL_VALUE = ?
             elif "FINAL_VALUE =" in line:
+                # Slagen we de waarde na de '=' zonder spaties en ' (nm)' op in final_value
                 final_value = float(line.split('=')[1].strip().strip(' (nm)'))
+            # Bevat de lijn die we nu lezen de string INCREMENT = ?
             elif "INCREMENT =" in line:
+                # Slagen we de waarde na de '=' zonder spaties en ' (nm)' op in increment
                 increment = float(line.split('=')[1].strip().strip(' (nm)'))
+        # Als al onze variabelen ingevuld zijn ( dus niet gelijk aan None )
         if initial_value is not None and final_value is not None and increment is not None:
+            # Gaan we een numpy array maken van alle waarden tussen initial_value (350 nm) tot en met final_value (800 nm)
+            # Met als tussen stap increment (.1)
             wavelengths = np.arange(initial_value, final_value + increment, increment)
-
+        # We gaan opnieuw doo alle lijnen 
         for line in lines:
+            # Deze lijnen hebben we niet meer nodig
             if "UV/VIS SPECTRUM" in line or "INITIAL_VALUE" in line or "FINAL_VALUE" in line or "INCREMENT" in line:
+                # Skip deze lijnen maar
                 continue
+            # Nu zitten we aan onze getallen 
+            # Hier gaat het om deze lijnen:
+            # 0.13481318392405361	0.1518190799237463	0.10441803963696514	0.11449534998528905	0.1563535194936834
+            # Deze lijn gaan we dan splitsen omdat we alle getallen apart nodig hebben
+            # In de split() methode geven we niets mee, dit is omdat de spaties niet overal hetzelfde
             for value in line.split():
                 try:
-                    intensity.append(float(value))
-                except ValueError:
-                    continue
-        
-        plt.figure()
-        plt.plot(wavelengths, intensity)
-        plt.xlabel('Wavelength (nm)')
-        plt.ylabel('Intensity')
-        plt.grid(True)
-        plt.show()
+                    # We gaan elk getal in onze intensity lijst stoppen 
+                    intensity.append(float(value)) # We maken eerst een kommagetal van onze waarde, hij is anders van type string
+                except ValueError: # Als we op een of andere manier toch geen getal lezen gooien we een fout
+                    continue # We doen verder dan gwn door met het lezen van de waarden in de split() methode
+        # We gaan nu eindelijk een plot tekenen
+        plt.figure() # Hierdoor kunnen wij meerdere plots op scherm laten zien
+        plt.plot(wavelengths, intensity) # We gaan hier de grafiek tekenen, x as is de golflengte en y as de intensiteit (zie word doc)
+        plt.xlabel('Wavelength (nm)') # Wat is de betekenis van de x as?
+        plt.ylabel('Intensity') # Wat is de betekenis van de y as?
+        plt.grid(True) # Mooie vakje achter de grafiek 😎
+        plt.show() # We tonen deze grafiek eerst ( je kan zo nog altijd de grafiek uit de 3de oefening zien )
 
     # PART 4 FINISH
